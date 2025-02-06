@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DatabaseTask.Data;
+using DatabaseTask.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTask.Controllers
 {
@@ -21,5 +24,15 @@ namespace DatabaseTask.Controllers
 
             return View();
         }
+        public IEnumerable<Patient> SearchResult()
+        {
+            var result = _context.Patients
+                .FromSqlRaw<Patient>("spSearchPatients")
+                .ToList();
+
+            return result;
+        }
+
+
     }
 }
